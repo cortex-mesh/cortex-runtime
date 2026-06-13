@@ -121,9 +121,7 @@ class TaskDispatcher:
             domain=domain,
         )
 
-    async def _resolve_target(
-        self, message: Any, domain: str
-    ) -> tuple[str | None, str | None]:
+    async def _resolve_target(self, message: Any, domain: str) -> tuple[str | None, str | None]:
         """Determine target stream and preferred agent.
 
         Priority:
@@ -155,12 +153,12 @@ class TaskDispatcher:
                 if agent and self._registry is not None:
                     get = getattr(self._registry, "get", None)
                     if get and get(agent) is not None:
-                            logger.info(
-                                "Thread affinity: routing thread %s to agent %s",
-                                message.thread_id,
-                                agent,
-                            )
-                            return f"{AGENT_STREAM_PREFIX}:{agent}", agent
+                        logger.info(
+                            "Thread affinity: routing thread %s to agent %s",
+                            message.thread_id,
+                            agent,
+                        )
+                        return f"{AGENT_STREAM_PREFIX}:{agent}", agent
 
         if self._registry is not None:
             primary_agent = getattr(self._registry, "primary_agent", None)
@@ -191,8 +189,7 @@ class TaskDispatcher:
 
         attachments = getattr(message, "attachments", [])
         serialized_attachments = [
-            dataclasses.asdict(att) if dataclasses.is_dataclass(att) else att
-            for att in attachments
+            dataclasses.asdict(att) if dataclasses.is_dataclass(att) else att for att in attachments
         ]
 
         return TaskPayload(

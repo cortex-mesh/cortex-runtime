@@ -54,7 +54,7 @@ def is_safe_typed_name(name: str) -> bool:
     Accepts only lowercase letters, digits, and hyphens — no path traversal
     characters. This is enforced on the write path, not the parse path.
     """
-    return bool(re.fullmatch(r"[a-z0-9][a-z0-9\-]*", name))
+    return bool(re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name))
 
 
 # ── Write modes ──────────────────────────────────────────────────────────

@@ -11,7 +11,7 @@ def test_package_imports():
     """Top-level package imports without error."""
     import cortex_runtime
 
-    assert cortex_runtime.__version__ == "0.1.0"
+    assert cortex_runtime.__version__ == "0.1.1"
 
 
 def test_exceptions_import():
@@ -63,6 +63,15 @@ def test_keyspace_personal_is_fleet():
     ks = Keyspace("personal")
     assert ks.is_fleet
     assert ks.responded_key("m1") == "cortex:responded:m1"
+
+
+def test_keyspace_case_insensitive():
+    from cortex_runtime.redis_keys import Keyspace
+
+    # 'Personal' and 'PERSONAL' must map to the fleet namespace, not a scoped org
+    assert Keyspace("Personal").is_fleet
+    assert Keyspace("PERSONAL").is_fleet
+    assert Keyspace("  Personal  ").is_fleet
 
 
 def test_env_import():
@@ -131,11 +140,15 @@ def test_memory_safe_name():
     from cortex_runtime.memory import is_safe_typed_name
 
     assert is_safe_typed_name("ryan")
+    assert is_safe_typed_name("a")  # single char valid
     assert is_safe_typed_name("ryan-lee")
     assert is_safe_typed_name("my-project-v2")
     assert not is_safe_typed_name("../evil")
     assert not is_safe_typed_name("has space")
     assert not is_safe_typed_name("UPPER")
+    assert not is_safe_typed_name("foo-")  # trailing hyphen rejected
+    assert not is_safe_typed_name("-foo")  # leading hyphen rejected
+    assert not is_safe_typed_name("")  # empty rejected
 
 
 def test_context_runtime_import():
@@ -196,6 +209,25 @@ def test_providers_import():
     assert hasattr(m, "ToolResult")
     assert hasattr(m, "build_tool_schemas")
     assert hasattr(m, "execute_tool_calls")
+
+
+def test_session_state_alias_matches_session_model():
+    """SessionState exported from cortex_runtime must be the same type as Session.state."""
+    from cortex_runtime import SessionState
+    from cortex_runtime.session.models import Session, SessionLifecycleState
+
+    # SessionState must be the same class as SessionLifecycleState so comparisons work
+    assert SessionState is SessionLifecycleState
+
+    # Comparison against session.state must not silently return False
+    s = Session(
+        channel="test",
+        domain=__import__("cortex_runtime.models", fromlist=["Domain"]).Domain(
+            __import__("cortex_runtime.models", fromlist=["Department"]).Department.ENG
+        ),
+        thread_id="t1",
+    )
+    assert s.state == SessionState.ACTIVE
 
 
 def test_no_closed_set_imports():

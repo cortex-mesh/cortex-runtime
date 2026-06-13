@@ -82,7 +82,9 @@ class SessionConfig(BaseModel):
     """Configuration for SessionManager and SessionStore."""
 
     memory_base_path: Path = Field(
-        default_factory=lambda: Path(os.environ.get("CORTEX_MEMORY_PATH", "~/.cortex/memory")).expanduser()
+        default_factory=lambda: Path(
+            os.environ.get("CORTEX_MEMORY_PATH", "~/.cortex/memory")
+        ).expanduser()
     )
     hot_window_size: int = 20
     warm_summary_threshold: int = 50

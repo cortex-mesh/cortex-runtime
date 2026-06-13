@@ -109,8 +109,8 @@ class RedisStreamBus:
         stream: str,
         payload: bytes,
         *,
-        msg_type: str = "",
-        maxlen: int | None = None,
+        msg_type: str = "task",
+        maxlen: int = 1000,
     ) -> str:
         """Publish a message to a Redis stream via XADD."""
         r = await self._ensure_connected()
@@ -122,7 +122,7 @@ class RedisStreamBus:
         }
 
         xadd_kwargs: dict[str, object] = {}
-        if maxlen is not None:
+        if maxlen > 0:
             xadd_kwargs["maxlen"] = maxlen
             xadd_kwargs["approximate"] = True
 

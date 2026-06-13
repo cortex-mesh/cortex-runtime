@@ -196,6 +196,10 @@ class PluginRegistry:
             return True
         except Exception as e:
             logger.warning("Plugin '%s' setup failed: %s", name, e)
+            # Remove from pending so subsequent calls raise PluginNotFoundError
+            # rather than retrying setup on every execute() call.
+            self._pending_setup.pop(name, None)
+            self._plugin_info.pop(name, None)
             return False
         finally:
             self._loading.discard(name)
@@ -251,6 +255,7 @@ class PluginRegistry:
         if action_info.parameters:
             try:
                 import jsonschema
+
                 jsonschema.validate(instance=params, schema=action_info.parameters)
             except ImportError:
                 pass  # jsonschema optional — skip validation if not installed
@@ -313,6 +318,10 @@ class PluginRegistry:
                 await self.unload_plugin(name)
             except Exception as e:
                 logger.error("Error unloading plugin %s: %s", name, e)
+        # Clear stale _plugin_info entries for plugins that were discovered
+        # but never promoted to loaded (no teardown was run for them).
+        for name in self._pending_setup:
+            self._plugin_info.pop(name, None)
         self._pending_setup.clear()
         logger.info("Plugin registry shutdown complete")
 

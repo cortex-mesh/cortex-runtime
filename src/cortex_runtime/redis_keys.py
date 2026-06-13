@@ -266,7 +266,7 @@ class Keyspace:
     __slots__ = ("_org_id",)
 
     def __init__(self, org_id: str | None = None) -> None:
-        normalized = org_id.strip() if org_id is not None else None
+        normalized = org_id.strip().lower() if org_id is not None else None
         self._org_id = None if _is_fleet_org(normalized) else normalized
 
     @classmethod

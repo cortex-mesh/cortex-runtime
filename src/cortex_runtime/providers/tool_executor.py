@@ -98,7 +98,7 @@ async def execute_tool_calls(
                 ToolResult(
                     tool_call_id=call.id,
                     content=f"Invalid tool name format: {call.name!r}. "
-                            f"Expected '<plugin>{TOOL_NAME_SEP}<action>'.",
+                    f"Expected '<plugin>{TOOL_NAME_SEP}<action>'.",
                     is_error=True,
                 )
             )

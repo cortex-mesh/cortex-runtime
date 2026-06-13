@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cortex-runtime"
-version = "0.1.0"
+version = "0.1.1"
 description = "Open agent orchestration runtime — bus, dispatch, turn loop, and plugin system"
 readme = "README.md"
 license = { file = "LICENSE" }

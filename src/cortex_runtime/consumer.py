@@ -219,9 +219,7 @@ class TaskConsumer:
 
         tasks = []
         for stream in streams:
-            task = asyncio.create_task(
-                self._consume_stream(stream, consumer_name, execute_fn)
-            )
+            task = asyncio.create_task(self._consume_stream(stream, consumer_name, execute_fn))
             tasks.append(task)
 
         try:
@@ -308,9 +306,7 @@ class TaskConsumer:
         try:
             timeout = float(raw)
         except ValueError:
-            logger.warning(
-                "Invalid CORTEX_TASK_EXECUTION_TIMEOUT_SECONDS=%r; using 2700", raw
-            )
+            logger.warning("Invalid CORTEX_TASK_EXECUTION_TIMEOUT_SECONDS=%r; using 2700", raw)
             timeout = 2700.0
         return None if timeout <= 0 else timeout
 

@@ -68,15 +68,6 @@ class TaskPriority(StrEnum):
     URGENT = "urgent"
 
 
-# ── Session state ────────────────────────────────────────────────────────
-
-
-class SessionState(StrEnum):
-    ACTIVE = "active"
-    IDLE = "idle"
-    ARCHIVED = "archived"
-
-
 # ── Stream chunk kind ────────────────────────────────────────────────────
 
 
@@ -147,9 +138,7 @@ class BusConfig(BaseModel):
     # Redis connection
     host: str = Field(default_factory=lambda: os.environ.get("REDIS_HOST", "localhost"))
     port: int = Field(default_factory=lambda: int(os.environ.get("REDIS_PORT", "6379")))
-    password: str | None = Field(
-        default_factory=lambda: os.environ.get("REDIS_PASSWORD") or None
-    )
+    password: str | None = Field(default_factory=lambda: os.environ.get("REDIS_PASSWORD") or None)
     db: int = 0
     max_connections: int = 20
     socket_timeout: float = 10.0

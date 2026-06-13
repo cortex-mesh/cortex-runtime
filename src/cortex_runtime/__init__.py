@@ -41,15 +41,15 @@ from cortex_runtime.models import (
     Domain,
     Envelope,
     HealthStatus,
-    SessionState,
     StreamChunk,
     StreamChunkKind,
     TaskPriority,
 )
 from cortex_runtime.provider import CortexProvider
 from cortex_runtime.redis_keys import Keyspace
+from cortex_runtime.session.models import SessionLifecycleState as SessionState
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "AGENT_STREAM_PREFIX",

@@ -34,10 +34,14 @@ dev = [
 plugins = [
     "jsonschema>=4.0",
 ]
+docs = [
+    "mkdocs-material>=9.0",
+]
 
 [project.urls]
-Homepage = "https://github.com/cortex-mesh/cortex-runtime"
+Homepage = "https://cortex-mesh.github.io/cortex-runtime/"
 Repository = "https://github.com/cortex-mesh/cortex-runtime"
+Changelog = "https://cortex-mesh.github.io/cortex-runtime/changelog/"
 
 [project.entry-points."cortex_runtime.plugins"]
 # Third-party plugins register here. Example:

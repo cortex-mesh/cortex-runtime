@@ -37,7 +37,7 @@ Redis Streams. The primary attack surfaces are:
 
 ## Reporting a Vulnerability
 
-Please report security vulnerabilities via email to **security@ctxhost.com**.
+Please report security vulnerabilities via email to **security@cortexagents.ai**.
 
 Do NOT open a public GitHub issue for security vulnerabilities.
 

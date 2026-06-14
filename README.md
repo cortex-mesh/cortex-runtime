@@ -180,4 +180,4 @@ Functional Source License 1.1 (FSL-1.1-MIT). Converts to MIT on the Change Date
 (four years from first publication). See [LICENSE](LICENSE) for full terms.
 
 Not for use in competing AI orchestration products without a separate license.
-Contact hello@ctxhost.com for licensing inquiries.
+Contact hello@cortexagents.ai for licensing inquiries.

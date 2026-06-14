@@ -30,3 +30,18 @@ htmlcov/
 
 # MkDocs build output
 site/
+
+# Secrets / local env — never commit credentials (no such file exists today;
+# this is a guardrail so a contributor can't accidentally add one)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+.pypirc
+.npmrc
+secrets.*
+credentials.json

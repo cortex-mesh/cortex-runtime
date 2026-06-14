@@ -38,6 +38,11 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    # GitHub Pages isn't available until the repo is public AND Pages is enabled
+    # (Settings -> Pages -> Source: GitHub Actions). The `build` job above still
+    # validates the docs (`mkdocs build --strict`); only the deploy is skipped on
+    # the private pre-launch repo. Drop this `if:` (and enable Pages) at launch.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

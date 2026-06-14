@@ -34,6 +34,9 @@ dev = [
 plugins = [
     "jsonschema>=4.0",
 ]
+anthropic = [
+    "anthropic>=0.30",
+]
 docs = [
     "mkdocs-material>=9.0",
 ]

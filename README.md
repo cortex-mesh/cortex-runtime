@@ -27,6 +27,31 @@ This package gives you:
 
 ## Quickstart
 
+**Option A — Docker Compose (fastest, 2 minutes)**
+
+```bash
+git clone https://github.com/cortex-mesh/cortex-runtime
+cd cortex-runtime
+
+docker compose up -d                          # Redis + echo agent
+python examples/send_task.py "hello world"    # see a response
+
+# With Claude instead of echo:
+ANTHROPIC_API_KEY=sk-ant-... docker compose up -d --build
+python examples/send_task.py "write me a haiku about Redis Streams"
+```
+
+**Option B — GitHub Codespaces (zero local install)**
+
+Click **Code → Codespaces → Create codespace on main**. Redis starts automatically. Then in the terminal:
+
+```bash
+python examples/demo_agent.py &
+python examples/send_task.py "hello from Codespaces"
+```
+
+**Option C — pip + your own Redis**
+
 ```bash
 pip install cortex-runtime
 ```
@@ -35,7 +60,7 @@ pip install cortex-runtime
 import asyncio
 from cortex_runtime.models import BusConfig
 from cortex_runtime.bus_redis import RedisStreamBus
-from cortex_runtime.consumer import TaskConsumer, extract_discoveries
+from cortex_runtime.consumer import TaskConsumer
 
 async def my_execute(prompt, *, context=None, working_directory=None):
     """Your AI provider implementation goes here."""
@@ -44,7 +69,7 @@ async def my_execute(prompt, *, context=None, working_directory=None):
     yield StreamChunk(kind=StreamChunkKind.COMPLETE)
 
 async def main():
-    config = BusConfig(host="localhost", password="your-redis-password")
+    config = BusConfig()  # reads REDIS_HOST / REDIS_PORT / REDIS_PASSWORD from env
     bus = RedisStreamBus(config)
 
     consumer = TaskConsumer(

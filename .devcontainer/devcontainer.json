@@ -1,0 +1,44 @@
+{
+  "name": "cortex-runtime",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+
+  "features": {
+    // Installs Redis 7 natively in the container — no Docker-in-Docker needed
+    "ghcr.io/itsmechlark/features/redis-server:1": {
+      "version": "7"
+    }
+  },
+
+  "postCreateCommand": "pip install -e '.[dev,anthropic]'",
+
+  "remoteEnv": {
+    "REDIS_HOST": "localhost",
+    "CORTEX_IDENTITY": "codespaces-agent"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "[python]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        }
+      }
+    }
+  },
+
+  "forwardPorts": [6379],
+
+  "portsAttributes": {
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "silent"
+    }
+  }
+}

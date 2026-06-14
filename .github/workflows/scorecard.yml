@@ -1,0 +1,40 @@
+name: Scorecard
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  # NOTE (launch): add `schedule:` (weekly) and `branch_protection_rule:` triggers
+  # once the repo is public so the score refreshes automatically.
+
+permissions:
+  contents: read
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    # Publishing results + the public badge require a public repo. Skip on the
+    # private pre-launch repo; arms automatically at launch (drop the `if:`).
+    if: ${{ !github.event.repository.private }}
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ossf/scorecard-action@v2.4.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scorecard-results
+          path: results.sarif
+          retention-days: 5
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif

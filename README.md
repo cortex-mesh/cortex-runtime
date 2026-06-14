@@ -1,5 +1,16 @@
 # cortex-runtime
 
+[![CI](https://github.com/cortex-mesh/cortex-runtime/actions/workflows/ci.yml/badge.svg)](https://github.com/cortex-mesh/cortex-runtime/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/cortex-mesh/cortex-runtime/actions/workflows/codeql.yml/badge.svg)](https://github.com/cortex-mesh/cortex-runtime/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/cortex-mesh/cortex-runtime/badge)](https://scorecard.dev/viewer/?uri=github.com/cortex-mesh/cortex-runtime)
+[![PyPI](https://img.shields.io/pypi/v/cortex-runtime.svg)](https://pypi.org/project/cortex-runtime/)
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://pypi.org/project/cortex-runtime/)
+[![License: FSL-1.1](https://img.shields.io/badge/license-FSL--1.1-blue.svg)](LICENSE)
+
+<!-- Badge status note: CodeQL, OpenSSF Scorecard, and PyPI badges render as
+"no status / not found" until the repo is public and the first release is
+published — they arm automatically at launch. CI and License render now. -->
+
 **Open agent orchestration runtime** — the bus, dispatch wire models, agent turn loop, context runtime, memory system, and plugin protocol that power the CORTEX multi-agent mesh.
 
 > License: [Functional Source License 1.1](LICENSE) (converts to MIT in 4 years)
